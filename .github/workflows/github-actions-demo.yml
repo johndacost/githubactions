@@ -28,7 +28,7 @@ jobs:
         id: check_runme
 
       # Add your job steps here
-      - name: Run Job
+      - name: Should skip me !
         if: steps.check_runme.outputs.run_job == 'true'
         run: |
           # Your job commands here

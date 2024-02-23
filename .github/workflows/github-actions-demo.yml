@@ -15,5 +15,22 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+        id: list_files
 
+      # Add a conditional step to check for the existence of runme.md
+      - name: Check for runme.md
+        run: |
+          if [ -f "runme.md" ]; then
+            echo "::set-output name=run_job::true"
+          else
+            echo "::set-output name=run_job::false"
+          fi
+        id: check_runme
+
+      # Add your job steps here
+      - name: Run Job
+        if: steps.check_runme.outputs.run_job == 'true'
+        run: |
+          # Your job commands here
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
